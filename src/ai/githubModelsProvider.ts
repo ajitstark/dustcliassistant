@@ -13,8 +13,8 @@ export class GitHubModelsProvider implements AiChatProvider {
 
   async generateInsight(input: { prompt: string; context: string }) {
     const url = this.args.org
-      ? `https://api.github.com/orgs/${encodeURIComponent(this.args.org)}/models/chat/completions`
-      : "https://api.github.com/models/chat/completions";
+      ? `https://models.github.ai/orgs/${encodeURIComponent(this.args.org)}/inference/chat/completions`
+      : "https://models.github.ai/inference/chat/completions";
 
     try {
       const res = await axios.post(
