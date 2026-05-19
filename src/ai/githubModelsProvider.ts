@@ -45,12 +45,17 @@ export class GitHubModelsProvider implements AiChatProvider {
       const anyErr = e as any;
       const status = anyErr?.response?.status ?? anyErr?.status;
       const data = anyErr?.response?.data ?? anyErr?.data;
+      const message = anyErr?.message;
+      const code = anyErr?.code;
+      
       const details =
         data && typeof data === "object" ? JSON.stringify(data) : data ? String(data) : undefined;
 
       const hint =
         `GitHub Models request failed` +
         (status ? ` with HTTP ${status}` : "") +
+        (code ? ` (${code})` : "") +
+        (message && !details ? `: ${message}` : "") +
         `. Check that your token has the \`models:read\` scope (or fine-grained PAT permission for Models).`;
       throw new Error(details ? `${hint}\n${details}` : hint);
     }
