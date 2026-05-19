@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model MemoryEntry {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  error     String
+  fix       String?
+  notes     String?
+  tags      String[] @default([])
+  // Reference to Chroma (or other vector store) doc id
+  vectorId  String?  @unique
+}
+
+model DebugArtifact {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  kind      String
+  path      String?
+  content   String
+  sessionId String?
+}
+
